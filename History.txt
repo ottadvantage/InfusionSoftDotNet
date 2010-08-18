@@ -1,4 +1,18 @@
-﻿v1.0.0.5
+﻿v1.0.0.6
+    Notes:
+        Source has been committed to InfusionSoftDotNet.codeplex.com for open source distribution and collaboration
+    Fixed:
+    Added:
+        * InvoiceService
+            createBlankOrder(Int32 contactId, string description, DateTime orderDate, Int32 leadAffiliate, Int32 saleAffiliate) - creates an empty order returning the new order number. This is the first step in an ecommerce transaction.
+            addOrderItem(Int32 invoiceId, Int32 productId, Int32 type, Double Price, Int32 quantity, String description, String notes) - Adds a product to an existing order/invoice. Returns true/false if add succeeded.
+            chargeInvoice(Int32 invoiceId, String notes, Int32 creditCardId, Int32 merchantAccountId, Boolean bypassCommissions) - Charges a customer’s credit card for the outstanding amount on an existing invoice. You’ll need to have a creditCardId to use, which can be found with locateExistingCard() if your customer has purchased from you before, or from the DataService class if you need to insert a new credit card
+            getAllPaymentOptions() - Is used to retrieve all Payment Types currently setup under the Order Settings section of Infusionsoft
+            locateExistingCard(int contactId, string last4) - finds a credit card on file for a contactId that matches the last four digits of the card. Make sure to send only the last four digits of the credit card.
+            GetAllShippingOptions() - returns XmlRpcStruct of all the shipping options currently setup for the Infusionsoft shopping cart
+            GetPluginStatus(String fullyQualifiedClassName) - returns String of the current status of the given plugin
+    Removed:
+v1.0.0.5
     Fixed:
     Added:
         * MemberOfGroup(Int32 Id, Int32 GroupId) method - returns boolean value to indicate if Contact is in a given group

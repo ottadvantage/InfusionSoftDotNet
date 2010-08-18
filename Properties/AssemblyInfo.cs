@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("InfusionSoftDotNet")]
-[assembly: AssemblyDescription("InfusionSoft API wrapper for ASP.NET")]
+[assembly: AssemblyDescription("InfusionSoft API library for ASP.NET")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Exhibit A Communications")]
 [assembly: AssemblyProduct("InfusionSoftDotNet")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.5")]
-[assembly: AssemblyFileVersion("1.0.0.5")]
+[assembly: AssemblyVersion("1.0.0.6")]
+[assembly: AssemblyFileVersion("1.0.0.6")]

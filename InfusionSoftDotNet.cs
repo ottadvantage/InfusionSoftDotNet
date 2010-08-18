@@ -160,7 +160,7 @@ namespace InfusionSoftDotNet
         Double isCalculateAmountOwed(string key, int invoiceId);
 
         [XmlRpcMethod("InvoiceService.getAllPaymentOptions")]
-        XmlRpcStruct isGetAllPaymentOptions(string key);
+        XmlRpcStruct[] isGetAllPaymentOptions(string key);
         //Array
         //(
         //    [Credit Card] => Credit Card
@@ -185,7 +185,7 @@ namespace InfusionSoftDotNet
         XmlRpcStruct isValidateCreditCard(string key, int creditCardId);
 
         [XmlRpcMethod("InvoiceService.getAllShippingOptions")]
-        XmlRpcStruct[] isGetAllShippingOptions(string key);
+        String[] isGetAllShippingOptions(string key);
 
         [XmlRpcMethod("InvoiceService.getPluginStatus")]
         string isGetPluginStatus(string key, string fullyQualifiedClassName);
@@ -887,9 +887,94 @@ namespace InfusionSoftDotNet
 
         #region InvoiceService
         #region core methods
-        // public static Int32 createBlankOrder()
-        // public static Boolean addOrderItem()
-        // public static XmlRpcStruct chargeInvoice()
+        /// <summary>
+        /// createBlankOrder will create a blank order for the given contactId. This empty order is then set to begin adding items into which would be the next step in the ecommerce transaction 
+        /// </summary>
+        /// <param name="contactId"></param>
+        /// <param name="description"></param>
+        /// <param name="orderDate"></param>
+        /// <param name="leadAffiliate"></param>
+        /// <param name="saleAffiliate"></param>
+        /// <returns>new order ID</returns>
+        public static Int32 createBlankOrder(Int32 contactId, string description, DateTime orderDate, Int32 leadAffiliate, Int32 saleAffiliate)
+        {
+            Int32 newOrderNumber = 0;
+
+            try
+            {
+                InfusionSoftApiInterfaces api = XmlRpcProxyGen.Create<InfusionSoftApiInterfaces>();
+                api.Url = _ApiURL;
+                newOrderNumber = api.isCreateBlankOrder(_ApiKey, contactId, description, orderDate, leadAffiliate, saleAffiliate);
+            }
+            catch (Exception ex)
+            {
+                newOrderNumber = -1;
+            }
+
+            return newOrderNumber;
+        }
+
+        /// <summary>
+        /// addOrderItem adds a product to an existing order/invoice.
+        /// </summary>
+        /// <param name="invoiceId"></param>
+        /// <param name="productId"></param>
+        /// <param name="type">one of [UNKNOWN = 0; SHIPPING = 1; TAX = 2; SERVICE = 3; PRODUCT = 4; UPSELL = 5; FINANCECHARGE = 6; SPECIAL = 7;]</param>
+        /// <param name="Price"></param>
+        /// <param name="quantity"></param>
+        /// <param name="description">a short description of the title, typically you will want to use its name</param>
+        /// <param name="notes">a long description of the title, typically you will want to use the product’s description field</param>
+        /// <returns>true/false indicating success of the add attempt</returns>
+        public static Boolean addOrderItem(Int32 invoiceId, Int32 productId, Int32 type, Double price, Int32 quantity, String description, String notes)
+        {
+            Boolean success = false;
+
+            try
+            {
+                InfusionSoftApiInterfaces api = XmlRpcProxyGen.Create<InfusionSoftApiInterfaces>();
+                api.Url = _ApiURL;
+                success = api.isAddOrderItem(_ApiKey, invoiceId, productId, type, price, quantity, description, notes);
+            }
+            catch (Exception ex)
+            {
+                success = false;
+            }
+
+            return success;
+        }
+
+        /// <summary>
+        /// chargeInvoice Charges a customer’s credit card for the outstanding amount on an existing invoice. You’ll need to have a creditCardId to use, which can be found with locateExistingCard() if your customer has purchased from you before, or from the DataService class if you need to insert a new credit card
+        /// </summary>
+        /// <param name="invoiceId"></param>
+        /// <param name="notes"></param>
+        /// <param name="creditCardId"></param>
+        /// <param name="merchantAccountId"></param>
+        /// <param name="bypassCommissions"></param>
+        /// <returns>(struct) a struct containing payment details. The struct will contain the following keys:
+        ///            * Successful – true or fale on whether or not the card was charged. (If there was nothing to charge, this will be false)
+        ///            * Code – The approval code: APPROVED, DECLINED, ERROR, SKIPPED (there was no balance to charge)
+        ///            * RefNum – If charge was successful, this is the reference number passed back by the merchant account
+        ///            * Message – Error message for the transaction, if any
+        /// </returns>
+        public static XmlRpcStruct chargeInvoice(Int32 invoiceId, String notes, Int32 creditCardId, Int32 merchantAccountId, Boolean bypassCommissions)
+        {
+            XmlRpcStruct paymentDetails = new XmlRpcStruct();
+
+            try
+            {
+                InfusionSoftApiInterfaces api = XmlRpcProxyGen.Create<InfusionSoftApiInterfaces>();
+                api.Url = _ApiURL;
+                paymentDetails = api.isChargeInvoice(_ApiKey, invoiceId, notes, creditCardId, merchantAccountId, bypassCommissions);
+            }
+            catch (Exception ex)
+            {
+                //paymentDetails = ;
+            }
+
+            return paymentDetails;
+        }
+
         // public static Boolean deleteInvoice()
         // public static Boolean deleteSubscription()
         #endregion
@@ -941,9 +1026,13 @@ namespace InfusionSoftDotNet
         // public static Boolean addPaymentPlan()
         // public static Double calculateAmountOwed()
 
-        public static XmlRpcStruct getAllPaymentOptions()
+        /// <summary>
+        /// getAllPaymentOptions is used to retrieve all Payment Types currently setup under the Order Settings section of Infusionsoft
+        /// </summary>
+        /// <returns>(struct) all valid payment types currently setup in the application. Returns a single structure containing key called ErrorMessage with the value containing the message of the error.</returns>
+        public static XmlRpcStruct[] getAllPaymentOptions()
         {
-            XmlRpcStruct ret_value = new XmlRpcStruct();
+            XmlRpcStruct[] ret_value;
             try
             {
                 InfusionSoftApiInterfaces api = XmlRpcProxyGen.Create<InfusionSoftApiInterfaces>();
@@ -952,7 +1041,9 @@ namespace InfusionSoftDotNet
             }
             catch (Exception ex)
             {
-                ret_value = new XmlRpcStruct();
+                XmlRpcStruct fail = new XmlRpcStruct();
+                fail.Add("ErrorMessage", ex.Message);
+                ret_value = new XmlRpcStruct[1] { fail };
             }
             return ret_value;
         }
@@ -970,6 +1061,12 @@ namespace InfusionSoftDotNet
 
         // public static array getPayments()
 
+        /// <summary>
+        /// locateExistingCard finds a credit card on file for a contactId that matches the last four digits of the card. Make sure to send only the last four digits of the credit card.
+        /// </summary>
+        /// <param name="contactId"></param>
+        /// <param name="last4"></param>
+        /// <returns>(int) creditCardId if the card is found. Zero if no card matches</returns>
         public static Int32 locateExistingCard(int contactId, string last4)
         {
             Int32 cardId = 0;
@@ -993,7 +1090,33 @@ namespace InfusionSoftDotNet
         #endregion
 
         #region Misc methods
-        // public static array getAllShippingOptions()
+        /// <summary>
+        /// getAllShippingOptions() creates a string array of all the available shipping options for this InfusionSoft Application
+        /// </summary>
+        /// <returns>Returns a string array of all the available shipping</returns>
+        public static String[] getAllShippingOptions()
+        {
+            String[] AllShippingOptions = {};
+
+            try
+            {
+                InfusionSoftApiInterfaces api = XmlRpcProxyGen.Create<InfusionSoftApiInterfaces>();
+                api.Url = _ApiURL;
+                AllShippingOptions = api.isGetAllShippingOptions(_ApiKey);
+            }
+            catch (Exception ex)
+            {
+                //
+            }
+
+            return AllShippingOptions;
+        }
+        
+        /// <summary>
+        /// getPluginStatus retrieves the current status of the given plugin
+        /// </summary>
+        /// <param name="fullyQualifiedClassName"></param>
+        /// <returns>(string) the current status of the plugin</returns>
         public static String getPluginStatus(string fullyQualifiedClassName)
         {
             String ret_value = string.Empty;
