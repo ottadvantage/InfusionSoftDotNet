@@ -1,0 +1,6 @@
+﻿v1.0.0.5
+    Fixed:
+    Added:
+        * MemberOfGroup(Int32 Id, Int32 GroupId) method - returns boolean value to indicate if Contact is in a given group
+        * MemberOfGroups(Int32 Id) method - returns a List<String> of all the groups the passed contact is in 
+    Removed:
