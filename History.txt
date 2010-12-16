@@ -1,4 +1,23 @@
-﻿v1.0.0.6
+﻿v0.9.9.8 12/15/2010
+    Notes: 
+        * Classes broken up in to separate files to ease ongoing maintenance
+        * Assembly version number reset for preparation of releasing a public version of the DLL
+    Fixed: 
+    Added: 
+v1.0.0.7 Date - 
+    Notes:
+    Fixed:
+    Added:
+        * ContactService
+            resumeCampaign(int contactId, int campaignId) - resumes a follow-up sequence that has been stopped/paused for a given contact. Recently finished by InfusionSoft
+        * isdnExtensions
+            addDate(Int32 ContactId, string NoteToAdd) - Adds a new note to an existing contact.
+            infuDate(String timestamp) - This overload of infuDate(DateTime timestamp) returns a string formatted properly for InfusionSoft to undertand it is a DateTime value
+            infuDate(DateTime timestamp) - Returns a string formatted properly for InfusionSoft to understand it is a DateTime value
+            UpdateContactNote(Int32 ContactId, string NewNote) - Adds new note to existing ContactNotes in a contact record
+    Removed:
+    
+v1.0.0.6
     Notes:
         Source has been committed to InfusionSoftDotNet.codeplex.com for open source distribution and collaboration
     Fixed:
@@ -12,6 +31,7 @@
             GetAllShippingOptions() - returns XmlRpcStruct of all the shipping options currently setup for the Infusionsoft shopping cart
             GetPluginStatus(String fullyQualifiedClassName) - returns String of the current status of the given plugin
     Removed:
+
 v1.0.0.5
     Fixed:
     Added:

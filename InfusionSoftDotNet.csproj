@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InfusionSoftDotNet.cs" />
+    <Compile Include="isdnAPI.cs" />
+    <Compile Include="isdnExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
