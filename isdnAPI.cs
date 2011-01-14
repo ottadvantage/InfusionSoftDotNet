@@ -8,7 +8,7 @@ using CookComputing.XmlRpc;
 
 namespace InfusionSoftDotNet
 {
-    class isdnAPI
+    public class isdnAPI
     {
         public static string _AppName = ConfigurationSettings.AppSettings["iSdk-AppName"];
         public static string _AppType = ConfigurationSettings.AppSettings["iSdk-AppType"];
