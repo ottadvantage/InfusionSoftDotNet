@@ -1,4 +1,10 @@
-﻿v0.9.9.8 12/15/2010
+﻿v0.9.9.9 1/13/2010
+    Notes:
+    Fixed:
+        * Fixed STUPID error caused by breaking classes up below. (Missing public statement on isdnAPI class)
+    Added:
+        * Concurrent with this commit, I've updated the download files so they work properly.
+v0.9.9.8 12/15/2010
     Notes: 
         * Classes broken up in to separate files to ease ongoing maintenance
         * Assembly version number reset for preparation of releasing a public version of the DLL
