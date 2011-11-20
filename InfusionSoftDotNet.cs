@@ -116,6 +116,9 @@ namespace InfusionSoftDotNet
         [XmlRpcMethod("APIEmailService.sendEmail")] 
         bool esSendEmail(string key, string[] contactList, string fromAddress, string toADdress, string ccAddresses, string bccAddresses, string contentType, string htmlBody, string textBody);
 
+        [XmlRpcMethod("APIEmailService.sendEmail")]
+        bool esSendEmail(string key, string[] contactList, int templateId);
+
         [XmlRpcMethod("APIEmailService.updateEmailTemplate")] 
         bool esUpdateEmailTemplate(string key, int templateId, string pieceTitle, string categories, string fromAddress, string toAddress, string ccAddress, string bccAddress, string subject, string textBody, string htmlBody, string contentType, string mergeContext);
         
