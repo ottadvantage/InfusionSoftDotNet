@@ -1,4 +1,10 @@
-﻿v0.9.9.9 1/13/2010
+﻿v1.0.1.0 
+    Notes: Check out the new static property _LastException added by cchubb. Can be extremely helpful in determining what is going wrong with API calls!
+    Fixed:
+    Added:
+        * sendEmail(string[] contactList, int templateId) - Added extended version of sendEmail() available in API to isdnAPI class. This simplified verison doesn't require you to create and merge email in your code
+        * New public static property _LastException to isdnAPI class. This holds onto the last Exception value from any API method call. THANK YOU cchubb for this great addition to the project!
+v0.9.9.9 1/13/2010
     Notes:
     Fixed:
         * Fixed STUPID error caused by breaking classes up below. (Missing public statement on isdnAPI class)

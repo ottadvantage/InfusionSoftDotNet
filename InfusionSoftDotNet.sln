@@ -1,28 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfusionSoftDotNet", "InfusionSoftDotNet.csproj", "{4D2ABCAE-F6BE-4FDD-89FE-FF8A1334E1CE}"
-EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "InfusionSoftDotNetTestWeb", "..\InfusionSoftDotNetTestWeb\", "{8005B6D8-C645-45FA-8397-1A542F574709}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
-		Debug.AspNetCompiler.VirtualPath = "/InfusionSoftDotNetTestWeb"
-		Debug.AspNetCompiler.PhysicalPath = "..\InfusionSoftDotNetTestWeb\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\InfusionSoftDotNetTestWeb\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/InfusionSoftDotNetTestWeb"
-		Release.AspNetCompiler.PhysicalPath = "..\InfusionSoftDotNetTestWeb\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\InfusionSoftDotNetTestWeb\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "61493"
-		DefaultWebSiteLanguage = "Visual C#"
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,15 +13,8 @@ Global
 		{4D2ABCAE-F6BE-4FDD-89FE-FF8A1334E1CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D2ABCAE-F6BE-4FDD-89FE-FF8A1334E1CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D2ABCAE-F6BE-4FDD-89FE-FF8A1334E1CE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8005B6D8-C645-45FA-8397-1A542F574709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8005B6D8-C645-45FA-8397-1A542F574709}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8005B6D8-C645-45FA-8397-1A542F574709}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{8005B6D8-C645-45FA-8397-1A542F574709}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		VisualSVNWorkingCopyRoot = .
 	EndGlobalSection
 EndGlobal
