@@ -1,27 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Reflection;
-using System.Web;
-using System.Text;
 using CookComputing.XmlRpc;
 
 namespace InfusionSoftDotNet
 {
     public interface InfusionSoftApiInterfaces : IXmlRpcProxy
     {
+        #region AffiliateService
+        [XmlRpcMethod("AffiliateService.affClawbacks")]
+        XmlRpcStruct[] asAffClawbacks(string key, int affiliateId, string filterStartDate, string filterEndDate);
+
+        [XmlRpcMethod("AffiliateService.affCommissions")]
+        XmlRpcStruct[] asAffCommissions(string key, int affiliateId, string filterStartDate, string filterEndDate);
+
+        [XmlRpcMethod("AffiliateService.affPayouts")]
+        XmlRpcStruct[] asAffPayouts(string key, int affiliateId, string filterStartDate, string filterEndDate);
+
+        [XmlRpcMethod("AffiliateService.affRunningTotals")]
+        XmlRpcStruct[] asAffRunningTotals(string key, int[] affiliateIds);
+
+        [XmlRpcMethod("AffiliateService.affSummary")]
+        XmlRpcStruct[] asAffSummary(string key, int affiliateId, string filterStartDate, string filterEndDate);
+
+        #endregion
+
         #region ContactService
         [XmlRpcMethod("ContactService.add")]
-        Int32 addCon(string key, XmlRpcStruct cMap);
+        int addCon(string key, XmlRpcStruct cMap);
+
+        [XmlRpcMethod("ContactService.addToCampaign")]
+        bool addToCampaign(string key, int contactId, int campaignId);
+
+        [XmlRpcMethod("ContactService.addToGroup")]
+        bool addToGroup(string key, int contactId, int groupId);
 
         [XmlRpcMethod("ContactService.findByEmail")]
         XmlRpcStruct[] findByEmail(string key, string email, Array fieldsToReturn);
 
         [XmlRpcMethod("ContactService.load")]
         XmlRpcStruct load(string key, int contactId, Array selectedFields);
-
-        [XmlRpcMethod("ContactService.addToCampaign")]
-        bool addToCampaign(string key, int contactId, int campaignId);
 
         [XmlRpcMethod("ContactService.getNextCampaignStep")]
         int getNextCampaignStep(string key, int contactId, int campaignId);
@@ -35,11 +51,11 @@ namespace InfusionSoftDotNet
         [XmlRpcMethod("ContactService.resumeCampaign")]
         bool resumeCampaign(string key, int contactId, int campaignId);
 
+        [XmlRpcMethod("ContactService.resumeCampaignForContact")]
+        bool resumeCampaignForContact(string key, int contactId, int campaignId);
+
         [XmlRpcMethod("ContactService.rescheduleCampaignStep")]
         int rescheduleCampaignStep(string key, Array contactIds, int campaignStepId);
-
-        [XmlRpcMethod("ContactService.addToGroup")]
-        bool addToGroup(string key, int contactId, int groupId);
 
         [XmlRpcMethod("ContactService.removeFromGroup")]
         bool removeFromGroup(string key, int contactId, int groupId);
@@ -48,6 +64,9 @@ namespace InfusionSoftDotNet
         //[XmlRpcMethod("ContactService.runActionSequence")]
         //XmlRpcStruct runActionSequence(string key, int contactId, int actionSequenceID, *struct params);
         //bool runActionSequence(string key, int contactId, int actionSequenceId, 
+
+        [XmlRpcMethod("ContactService.update")]
+        int updateCon(string key, int contactId, XmlRpcStruct data);
         #endregion
 
         #region DataService
@@ -55,28 +74,28 @@ namespace InfusionSoftDotNet
         string appEcho(string textToEcho);
 
         [XmlRpcMethod("DataService.add")]
-        Int32 dsAdd(string key, string table, XmlRpcStruct values);
+        int dsAdd(string key, string table, XmlRpcStruct values);
 
         [XmlRpcMethod("DataService.load")]
         XmlRpcStruct dsLoad(string key, string table, int Id, Array fields);
 
         [XmlRpcMethod("DataService.update")]
-        Int32 dsUpdate(string key, string table, Int32 Id, XmlRpcStruct cMap);
+        int dsUpdate(string key, string table, int Id, XmlRpcStruct cMap);
 
         [XmlRpcMethod("DataService.delete")]
-        Boolean dsDelete(string key, string table, Int32 Id);
+        bool dsDelete(string key, string table, int Id);
 
         [XmlRpcMethod("DataService.findByField")]
-        XmlRpcStruct[] dsFindByField(string key, string table, Int32 limit, Int32 page, string fieldName, string fieldValue, Array selectedFields);
+        XmlRpcStruct[] dsFindByField(string key, string table, int limit, int page, string fieldName, string fieldValue, Array selectedFields);
 
         [XmlRpcMethod("DataService.query")]
-        XmlRpcStruct[] dsQuery(string key, string table, Int32 limit, Int32 page, XmlRpcStruct queryData, Array selectedFields);
+        XmlRpcStruct[] dsQuery(string key, string table, int limit, int page, XmlRpcStruct queryData, Array selectedFields);
 
         [XmlRpcMethod("DataService.addCustomField")]
-        Int32 dsAddCustomField(string key, string context, string displayName, string dataType, int groupId);
+        int dsAddCustomField(string key, string context, string displayName, string dataType, int groupId);
 
         [XmlRpcMethod("DataService.authenticateUser")]
-        Int32 dsAuthenticateUser(string key, string username, string passwordHash);
+        int dsAuthenticateUser(string key, string username, string passwordHash);
 
         [XmlRpcMethod("DataService.getAppSetting")]
         String dsGetAppSetting(string key, string module, string setting);
@@ -85,18 +104,57 @@ namespace InfusionSoftDotNet
         String dsGetTemporaryKey(string key, string username, string passwordHash);
 
         [XmlRpcMethod("DataService.updateCustomField")]
-        Boolean dsUpdateCustomField(string key, Int32 customFieldId, XmlRpcStruct values);
+        bool dsUpdateCustomField(string key, int customFieldId, XmlRpcStruct values);
         #endregion
 
-        #region APIEmailService
+        #region DiscountService
+        [XmlRpcMethod("DiscountService.addFreeTrial")]
+        int disAddFreeTrial(string key, string description, int freeTrialDays, int hidePrice, int subscriptionPlanId);
+
+        [XmlRpcMethod("DiscountService.getFreeTrial")]
+        XmlRpcStruct disGetFreeTrial(string key, int trialId);
+
+        [XmlRpcMethod("DiscountService.addOrderTotalDiscount")]
+        int disAddOrderTotalDiscount(string key, string name, string description, int applyDiscountToCommission, int percentOrAmt, int amt, int payType);
+
+        [XmlRpcMethod("DiscountService.getOrderTotalDiscount")]
+        XmlRpcStruct disGetOrderTotalDiscount(string key, int id);
+
+        [XmlRpcMethod("DiscountService.addCategoryDiscount")]
+        int disAddCategoryDiscount(string key, string name, string description, int applyDiscountToCommission, int amt);
+
+        [XmlRpcMethod("DiscountService.getCategoryDiscount")]
+        XmlRpcStruct disGetCategoryDiscount(string key, int id);
+
+        [XmlRpcMethod("DiscountService.addCategoryAssignmentToCategoryDiscount")]
+        int disAddCategoryAssignmentToCategoryDiscount(string key, int productId);
+
+        [XmlRpcMethod("DiscountService.getCategoryAssignmentsForCategoryDiscount")]
+        XmlRpcStruct disGetCategoryAssignmentsForCategoryDiscount(string key, int id);
+
+        [XmlRpcMethod("DiscountService.addProductTotalDiscount")]
+        int disAddProductTotalDiscount(string key, string name, string description, int applyDiscountToCommission, int productId, int percentOrAmt, int amt);
+
+        [XmlRpcMethod("DiscountService.getProductTotalDiscount")]
+        XmlRpcStruct disGetProductTotalDiscount(string key, int id);
+
+        [XmlRpcMethod("DiscountService.addShippingTotalDiscount")]
+        int disAddShippingTotalDiscount(string key, string name, string description, int applyDiscountToCommission, int percentOrAmt, int amt);
+
+        [XmlRpcMethod("DiscountService.getShippingTotalDiscount")]
+        XmlRpcStruct disGetShippingTotalDiscount(string key, int id);
+
+        #endregion
+
+        #region EmailService
         [XmlRpcMethod("APIEmailService.addEmailTemplate")]
         int esAddEmailTemplate(string key, string pieceTitle, string categories, string fromAddress, string toAddress, string ccAddress, string bccAddress, string subject, string textBody, string htmlBody, string contentType, string mergeContext);
 
         [XmlRpcMethod("APIEmailService.attachEmail")]
         bool esAttachEmail(string key, int ContactId, string fromName, string fromAddress, string toAddress, string ccAddresses, string bccAddresses, string contentType, string subject, string htmlBody, string textBody, string header, string receivedDate, string sentDate, int emailSentType);
 
-        [XmlRpcMethod("APIEmailService.createEmailTemplate")]
-        int esCreateEmailTemplate(string key, string templateTemplate, int userId, string fromAddress, string toAddress, string ccAddresses, string bccAddresses, string contentType, string subject, string htmlBody, string textBody);
+        //[XmlRpcMethod("APIEmailService.createEmailTemplate")] // replaced by APIEmailService.addEmailTempale()
+        //int esCreateEmailTemplate(string key, string templateTemplate, int userId, string fromAddress, string toAddress, string ccAddresses, string bccAddresses, string contentType, string subject, string htmlBody, string textBody);
 
         [XmlRpcMethod("APIEmailService.getAvailableMergeFields")]
         string[] esGetAvailableMergeFields(string key, string mergeContext);
@@ -116,48 +174,70 @@ namespace InfusionSoftDotNet
         [XmlRpcMethod("APIEmailService.sendEmail")] 
         bool esSendEmail(string key, string[] contactList, string fromAddress, string toADdress, string ccAddresses, string bccAddresses, string contentType, string htmlBody, string textBody);
 
-        [XmlRpcMethod("APIEmailService.sendEmail")]
-        bool esSendEmail(string key, string[] contactList, int templateId);
+        // Replaced by esSendTemplate() method
+        //[XmlRpcMethod("APIEmailService.sendEmail")]
+        //bool esSendEmail(string key, string[] contactList, int templateId);
 
-        [XmlRpcMethod("APIEmailService.updateEmailTemplate")] 
+        [XmlRpcMethod("APIEmailService.sendTemplate")]
+        bool esSendTemplate(string key, string[] contactList, int templateId);
+
+        [XmlRpcMethod("APIEmailService.updateEmailTemplate")]
         bool esUpdateEmailTemplate(string key, int templateId, string pieceTitle, string categories, string fromAddress, string toAddress, string ccAddress, string bccAddress, string subject, string textBody, string htmlBody, string contentType, string mergeContext);
         
         #endregion
 
-        #region APIAffiliateService
+        #region FileService
+        [XmlRpcMethod("FileService.getFile")]
+        string fsGetFile(string key, int FileId);
+
+        [XmlRpcMethod("FileService.getDownloadUrl")]
+        string fsGetDownloadUrl(string key, int FileId); // TODO could through a fault that gives back data in an XmlRpcStruct
+
+        [XmlRpcMethod("FileService.uploadFile")]
+        int fsUploadFile(string key, string FileName, string Base64EncodedData);
+
+        [XmlRpcMethod("FileService.uploadFile")]
+        int fsUploadFile(string key, string FileName, string Base64EncodedData, int ContactId);
+
+        [XmlRpcMethod("FileService.replaceFile")]
+        bool fsReplaceFile(string key, int FileId, string Base64EncodedData);
+
+        [XmlRpcMethod("FileService.renameFile")]
+        bool fsRenameFile(string key, int FileId, string fileName);
+
         #endregion
 
         #region InvoiceService
         [XmlRpcMethod("InvoiceService.createBlankOrder")]
-        Int32 isCreateBlankOrder(string key, int contactId, string description, DateTime orderDate, int leadAffiliateId, int saleAffiliateId);
+        int isCreateBlankOrder(string key, int contactId, string description, string orderDate, int leadAffiliateId, int saleAffiliateId);
 
         [XmlRpcMethod("InvoiceService.addOrderItem")]
-        Boolean isAddOrderItem(string key, int invoiceId, int productId, int type, double price, int quantity, string description, string notes);
+        bool isAddOrderItem(string key, int invoiceId, int productId, int type, double price, int quantity, string description, string notes);
         // type is one of [UNKNOWN = 0; SHIPPING = 1; TAX = 2; SERVICE = 3; PRODUCT = 4; UPSELL = 5; FINANCECHARGE = 6; SPECIAL = 7;]
 
         [XmlRpcMethod("InvoiceService.chargeInvoice")]
         XmlRpcStruct isChargeInvoice(string key, int invoiceId, string notes, int creditCardId, int merchantAccountId, bool bypassCommissions);
 
-        [XmlRpcMethod("InvoiceService.deleteInvoice")]
-        Boolean isDeleteInvoice(string key, int Id);
+        //[XmlRpcMethod("InvoiceService.deleteInvoice")]
+        //bool isDeleteInvoice(string key, int Id);
 
         [XmlRpcMethod("InvoiceService.deleteSubscription")]
-        Boolean isDeleteSubscription(string key, int Id);
+        bool isDeleteSubscription(string key, int Id);
 
         [XmlRpcMethod("InvoiceService.addRecurringOrder")]
-        Int32 isAddRecurringOrder(string key, int contactId, bool allowDuplicate, int cProgramId, int qty, double price, bool allowTax, int merchantAccountId, int creditCardId, int affiliateId, int daysTillCharge);
+        int isAddRecurringOrder(string key, int contactId, bool allowDuplicate, int cProgramId, int qty, double price, bool allowTax, int merchantAccountId, int creditCardId, int affiliateId, int daysTillCharge);
 
         [XmlRpcMethod("InvoiceService.addRecurringCommissionOverride")]
-        Boolean isAddRecurringComissionOverride(string key, int recurringOrderId, int affiliateId, double amount, int payoutType, string description);
+        bool isAddRecurringCommissionOverride(string key, int recurringOrderId, int affiliateId, double amount, int payoutType, string description);
 
         [XmlRpcMethod("InvoiceService.createInvoiceForRecurring")]
-        Int32 isCreateInvoiceForRecurring(string key, int recurringOrderId);
+        int isCreateInvoiceForRecurring(string key, int recurringOrderId);
 
         [XmlRpcMethod("InvoiceService.addManualPayment")]
-        Boolean isAddManualPayment(string key, int invoiceId, double amt, DateTime paymentDate, string paymentType, string paymentDescription, bool bypassCommissions);
+        bool isAddManualPayment(string key, int invoiceId, double amt, string paymentDate, string paymentType, string paymentDescription, bool bypassCommissions);
 
         [XmlRpcMethod("InvoiceService.addPaymentPlan")]
-        Boolean isAddPaymentPlan(string key, int invoiceId, bool autoCharge, int creditCardId, int merchantAccountId, int daysBetweenRetry, int maxRetry, double initialPmtAmt, DateTime initialPmtDate, DateTime planStartDate, int numPmts, int dayBetweenPmts);
+        bool isAddPaymentPlan(string key, int invoiceId, bool autoCharge, int creditCardId, int merchantAccountId, int daysBetweenRetry, int maxRetry, double initialPmtAmt, string initialPmtDate, string planStartDate, int numPmts, int dayBetweenPmts);
 
         [XmlRpcMethod("InvoiceService.calculateAmountOwed")]
         Double isCalculateAmountOwed(string key, int invoiceId);
@@ -179,10 +259,10 @@ namespace InfusionSoftDotNet
         XmlRpcStruct[] isGetPayments(string key, int invoiceId);
 
         [XmlRpcMethod("InvoiceService.locateExistingCard")]
-        Int32 isLocateExistingCard(string key, int contactId, string last4);
+        int isLocateExistingCard(string key, int contactId, string last4);
 
         [XmlRpcMethod("InvoiceService.recalculateTax")]
-        Boolean isRecalculateTax(string key, int invoiceId);
+        bool isRecalculateTax(string key, int invoiceId);
 
         [XmlRpcMethod("InvoiceService.validateCreditCard")]
         XmlRpcStruct isValidateCreditCard(string key, int creditCardId);
@@ -190,12 +270,95 @@ namespace InfusionSoftDotNet
         [XmlRpcMethod("InvoiceService.getAllShippingOptions")]
         String[] isGetAllShippingOptions(string key);
 
-        [XmlRpcMethod("InvoiceService.getPluginStatus")]
-        string isGetPluginStatus(string key, string fullyQualifiedClassName);
+        //[XmlRpcMethod("InvoiceService.getPluginStatus")]
+        //string isGetPluginStatus(string key, string fullyQualifiedClassName);
 
         [XmlRpcMethod("InvoiceService.updateJobRecurringNextBillDate")]
-        Boolean isUpdateJobRecurringNextBillDate(string key, int jobRecurringId, DateTime newNextBillDate);
+        bool isUpdateJobRecurringNextBillDate(string key, int jobRecurringId, string newNextBillDate);
 
+        [XmlRpcMethod("InvoiceService.addOrderCommisionOverride")]
+        bool isAddOrderCommissionOverride(string key, int invoiceId, int affiliateId, int productId, int percentage, double amount, int payoutType, string description, string date);
+
+        [XmlRpcMethod("InvoiceService.deactivateCreditCard")]
+        bool isDeactivateCreditCard(string key, int creditCardId);
+
+        #endregion
+
+        #region ProductService
+        [XmlRpcMethod("ProductService.getInventory")]
+        int psGetInventory(string key, int productId);
+
+        [XmlRpcMethod("ProductService.incrementInventory")]
+        bool psIncrementInventory(string key, int productId);
+
+        [XmlRpcMethod("ProductService.decrementInventory")]
+        bool psDecrementInventory(string key, int productId);
+
+        [XmlRpcMethod("ProductService.increaseInventory")]
+        bool psIncreaseInventory(string key, int productId, int quantity);
+
+        [XmlRpcMethod("ProductService.decreaseInventory")]
+        bool psDecreaseInventory(string key, int productId, int quantity);
+
+        [XmlRpcMethod("ProductService.deactivateCreditCard")]
+        bool psDeactivateCreditCard(string key, int creditCardId);
+
+        #endregion
+
+        #region SearchService
+        [XmlRpcMethod("SearchService.getAllReportColumns")]
+        XmlRpcStruct ssGetAllReportColumns(string key, int savedSearchId, int userId);
+
+        [XmlRpcMethod("SearchService.getSavedSearchResultsAllFields")]
+        XmlRpcStruct ssGetSavedSearchResultsAllFields(string key, int savedSearchId, int userId, int pageNumber);
+
+        [XmlRpcMethod("SearchService.getAvailableQuickSearches")]
+        XmlRpcStruct ssGetAvailableQuickSearches(string key, int userId);
+
+        [XmlRpcMethod("SearchService.quickSearch")]
+        XmlRpcStruct ssQuickSearch(string key, int quickSearchType, int userId, int searchData, int page, int returnLimit);
+
+        [XmlRpcMethod("SearchService.getDefaultQuickSearch")]
+        string ssGetDefaultQuickSearch(string key, int userId);
+
+        #endregion
+
+        #region ShippingService
+        [XmlRpcMethod("ShippingService.getAllShippingOptions")]
+        XmlRpcStruct[] shsGetAllShippingOptions(string key);
+
+        [XmlRpcMethod("ShippingService.getFlatRateShippingOption")]
+        XmlRpcStruct shsGetFlatRateShippingOption(string key, int optionId);
+
+        [XmlRpcMethod("ShippingService.getOrderTotalShippingOption")]
+        XmlRpcStruct[] shsGetOrderTotalShippingOption(string key, int optionId);
+
+        [XmlRpcMethod("ShippingService.getOrderTotalShippingRanges")]
+        XmlRpcStruct[] shsGetOrderTotalShippingRanges(string key, int optionId);
+
+        [XmlRpcMethod("ShippingService.getProductBasedShippingOption")]
+        XmlRpcStruct shsGetProductBasedShippingOption(string key, int optionId);
+
+        [XmlRpcMethod("ShippingService.getProductShippingPricesForProductShippingOption")]
+        XmlRpcStruct shsGetProductShippingPricesForProductShippingOption(string key, int optionId);
+
+        [XmlRpcMethod("ShippingService.getOrderQuantityShippingOption")]
+        XmlRpcStruct shsGetOrderQuantityShippingOption(string key, int optionId);
+
+        [XmlRpcMethod("ShippingService.getWeightBasedShippingOption")]
+        XmlRpcStruct shsGetWeightBasedShippingOption(string key, int optionId);
+
+        [XmlRpcMethod("ShippingService.getWeightBasedShippingRanges")]
+        XmlRpcStruct shsGetWeightBasedShippingRanges(string key, int optionId);
+
+        [XmlRpcMethod("ShippingService.getUpsShippingOption")]
+        XmlRpcStruct shsGetUpsShippingOption(string key, int optionId);
+
+        #endregion
+
+        #region WebFormService
+        [XmlRpcMethod("WebFormService.getMap")]
+        XmlRpcStruct[] wfsGetMap(string key);
         #endregion
     }
 
