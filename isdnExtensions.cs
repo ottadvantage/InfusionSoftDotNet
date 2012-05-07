@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Reflection;
-using System.Web;
-using System.Text;
 using CookComputing.XmlRpc;
 
 namespace InfusionSoftDotNet

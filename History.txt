@@ -1,4 +1,35 @@
-﻿v1.0.1.0 
+﻿v1.0.1.1 5/6/2012
+    Note: Updated library to support new services and functions in conjunction with Spring 2012 Release of the API. THIS MAY INCLUDE BREAKING CHANGES. Look for REMOVED to find deprecated methods
+    Fixed: 
+        * Shipping version now includes latest version (2.5.0) of the CookComputing XML-RPC library
+        * isCreateBlankOrder - modified to accept string rather than DateTime for orderDate (due to special format for dates that InfusionSoft uses)
+        * isAddManualPayment - modified to accept string rather than DateTime for paymentDate (due to special format for dates that InfusionSoft uses)
+        * isAddPaymentPlan - modified to accept string rather than DateTime for initialPmtDate and planStartDate (due to special format for dates that InfusionSoft uses)
+        * isUpdateJobRecurringNextBillDate - modified to accept string rather than DateTime for newNextBillDate (due to special format for dates that InfusionSoft uses)
+        * Numerous Interface calls were incorrectly passing DateTime values to InfusionSoft. Converted to use string values. The relevant isdnAPI calls have been corrected and overloaded to also accept DateTime values (that are being formatted to strings using isdnExtensions.infuDate() method to properly format them)
+    Added: 
+        * AffiliateService - While this existed previously, it hadn't made it into the library until now. Regions renamed to reflect current name of service
+        * ContactService - 
+            resumeCampaign() - Will be deprecated as we've added the following
+            resumeCampaignForContact() - added to replace the above as it is now referenced in API
+            updateCon() - newly added
+        * DiscountService - Newly added
+        * EmailService - Interfaces changed to use EmailService versus APIEmailService in anticipation of support for APIEmailService being dropped
+            esCreateEmailTemplate() - REMOVED as it is no longer supported in API. Replaced by esAddEmailTemplate()
+            esSendTemplate() - REPLACED esSendEmail(string key, string[] contactList, int templateId)
+        * FileService - Newly added
+            NOTE: Sample Response for getDownloadUrl() shows and error code in a struct format rather than the expected string value, is this a mistake?
+        * InvoiceService - 
+            isDeleteInvoice() - REMOVED as it is no longer supported in API
+            isGetPluginStatus() - REMOVED as it is no longer supported in API
+            isAddOrderCommissionOverride() - Added
+        * ProductService - Newly added
+        * SearchService - Newly added
+            NOTE: Sample Request differs from Required Parameters box (latter is missing the userId)
+        * ShippingService - Newly added
+        * WebFormService - Newly added
+            NOTE: Sample Response doesn't seem to coincide with the description of the WebFormService.getMap method
+v1.0.1.0 
     Notes: Check out the new static property _LastException added by cchubb. Can be extremely helpful in determining what is going wrong with API calls!
     Fixed:
     Added:

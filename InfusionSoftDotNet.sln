@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfusionSoftDotNet", "InfusionSoftDotNet.csproj", "{4D2ABCAE-F6BE-4FDD-89FE-FF8A1334E1CE}"
 EndProject
 Global
