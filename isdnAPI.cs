@@ -151,6 +151,23 @@ namespace InfusionSoftDotNet
             }
             return ret_value;
         }
+        public static int addWithDupCheck(XmlRpcStruct cMap, string dupCheckType)
+        {
+            int ret_value = 0;
+            _LastException = null;
+            try
+            {
+                InfusionSoftApiInterfaces api = XmlRpcProxyGen.Create<InfusionSoftApiInterfaces>();
+                api.Url = _ApiURL;
+                ret_value = api.addWithDupCheck(_ApiKey, cMap, dupCheckType);
+            }
+            catch (Exception ex)
+            {
+                _LastException = ex;
+                ret_value = -1;
+            }
+            return ret_value;
+        }
 
         public static XmlRpcStruct[] findByEmail(string email, string[] returnFields)
         {

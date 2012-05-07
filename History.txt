@@ -1,4 +1,9 @@
-﻿v1.0.1.1 5/6/2012
+﻿v1.0.1.2 
+    Notes:
+    Fixed:
+    Added:
+        * ContactService.addWithDupCheck - guess we missed this method...
+v1.0.1.1 5/6/2012
     Note: Updated library to support new services and functions in conjunction with Spring 2012 Release of the API. THIS MAY INCLUDE BREAKING CHANGES. Look for REMOVED to find deprecated methods
     Fixed: 
         * Shipping version now includes latest version (2.5.0) of the CookComputing XML-RPC library

@@ -27,6 +27,9 @@ namespace InfusionSoftDotNet
         [XmlRpcMethod("ContactService.add")]
         int addCon(string key, XmlRpcStruct cMap);
 
+        [XmlRpcMethod("ContactService.addWithDupCheck")]
+        int addWithDupCheck(string key, XmlRpcStruct cMap, string dupCheckType);
+
         [XmlRpcMethod("ContactService.addToCampaign")]
         bool addToCampaign(string key, int contactId, int campaignId);
 
